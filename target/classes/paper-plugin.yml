@@ -1,0 +1,5 @@
+name: MsClansAddons
+version: '1.0-SNAPSHOT'
+main: org.matic.msclansaddons.MsClansAddons
+api-version: '1.16'
+depend: [Clans]

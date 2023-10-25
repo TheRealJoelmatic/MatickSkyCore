@@ -1,0 +1,6 @@
+name: MsClansAddons
+description: A plugin that adds lots og coll stuff to the clans plugin
+version: '1.0-SNAPSHOT'
+main: org.matic.msclansaddons.MsClansAddons
+api-version: '1.16'
+depend: [Clans]

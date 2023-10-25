@@ -1,0 +1,5 @@
+org\matic\msclansaddons\events\deathHandler.class
+org\matic\msclansaddons\data\saveManger.class
+org\matic\msclansaddons\commands\clanStats.class
+org\matic\msclansaddons\MsClansAddons.class
+org\matic\msclansaddons\events\clanCreate.class
