@@ -5,6 +5,7 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,6 +17,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import static org.matic.msclansaddons.data.saveManger.getData;
+import static org.matic.msclansaddons.data.saveManger.getStringData;
 
 
 public class clanStats implements Listener {
@@ -32,7 +34,6 @@ public class clanStats implements Listener {
 
         if (args.length > 2 && args[0].equalsIgnoreCase("clan") && args[1].equalsIgnoreCase("stats") && !(args[2].isEmpty())) {
             event.setCancelled(true);
-            ClanConfiguration clanConfiguration = new ClanConfiguration();
             getPointsMethod(event.getPlayer(), args[2]);
         } else if (args.length > 1 && args[0].equalsIgnoreCase("clan") && args[1].equalsIgnoreCase("stats")) {
             event.setCancelled(true);
@@ -42,7 +43,6 @@ public class clanStats implements Listener {
 
         if (args.length > 1 && args[0].equalsIgnoreCase("clan") && args[1].equalsIgnoreCase("top")) {
             event.setCancelled(true);
-            ClanConfiguration clanConfiguration = new ClanConfiguration();
             Map<String, Double> clansTop = getClanTop();
 
             Player player = event.getPlayer();
@@ -53,10 +53,14 @@ public class clanStats implements Listener {
 
             int loopNumber = 1;
             for (Map.Entry<String, Double> entry : clansTop.entrySet()) {
+                if (loopNumber > 10) {
+                    break; // Break the loop after displaying the first 10 elements.
+                }
+
                 String name = entry.getKey();
                 Double value = entry.getValue();
 
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3 " + loopNumber + " - " + name + " - " + value + " Points"));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&6 " + loopNumber + " &7- &f" + name + " &7- &3" + value + " &7(Points)"));
 
                 loopNumber++;
             }
@@ -66,10 +70,6 @@ public class clanStats implements Listener {
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&m&m&3--------------------------------"));
 
         }
-
-
-        return;
-
     }
 
     public void getPointsMethod(Player player,String clan){
@@ -89,17 +89,24 @@ public class clanStats implements Listener {
 
         for (String clanMember : ChatColor.stripColor(clanConfiguration.getClanMembers(clan)).replace(" ", "").split(",")) {
             if (!clanMember.isEmpty()) {
-                OfflinePlayer clanMemberPlayer = Bukkit.getOfflinePlayer(UUID.fromString(clanMember));
 
-                if (clanMemberPlayer.hasPlayedBefore() && clanMemberPlayer.getPlayer() != null) {
-                    Double clanMemberKills = getData(clanMemberPlayer.getPlayer(), "kills", "playerdata.yml");
-                    Double clanMemberDeaths = getData(clanMemberPlayer.getPlayer(), "deaths", "playerdata.yml");
+                String clanMemberUUID = getStringData(clanMember, "uuid", "uuid.yml");
+                Double clanMemberKills = getData(clanMemberUUID,"kills", "playerdata.yml");
+                Double clanMemberDeaths = getData(clanMemberUUID,"deaths", "playerdata.yml");
 
-                    clanMoney = clanMoney + economy.getBalance(clanMemberPlayer);
-                    clanKills = clanKills + clanMemberKills;
-                    clanDeaths = clanDeaths + clanMemberDeaths;
+                //get the money :)
+
+                File playerDataFile = new File("plugins/BetterEconomy/balances.yml");
+                YamlConfiguration playerData = YamlConfiguration.loadConfiguration(playerDataFile);
+                if (playerData.contains(clanMemberUUID)) {
+                    clanMoney = clanMoney + playerData.getDouble(clanMemberUUID);
+                }
+                else{
+                    System.out.println(clanMemberUUID + " Failed to get there p's");
                 }
 
+                clanKills = clanKills + clanMemberKills;
+                clanDeaths = clanDeaths + clanMemberDeaths;
             }
         }
 
@@ -134,22 +141,30 @@ public class clanStats implements Listener {
         }
 
         for (String clanMember : ChatColor.stripColor(clanConfiguration.getClanMembers(clan)).replace(" ", "").split(",")) {
-            if (clanMember != null) {
-                OfflinePlayer clanMemberPlayer = Bukkit.getOfflinePlayer(clanMember);
+            if (!clanMember.isEmpty()) {
 
-                if( clanMemberPlayer.getPlayer() != null){
-                    Double clanMemberKills = getData(clanMemberPlayer.getPlayer(),"kills", "playerdata.yml");
-                    Double clanMemberDeaths = getData(clanMemberPlayer.getPlayer(),"deaths", "playerdata.yml");
+                String clanMemberUUID = getStringData(clanMember, "uuid", "uuid.yml");
+                Double clanMemberKills = getData(clanMemberUUID,"kills", "playerdata.yml");
+                Double clanMemberDeaths = getData(clanMemberUUID,"deaths", "playerdata.yml");
 
-                    clanMoney = clanMoney + economy.getBalance(clanMemberPlayer);
-                    clanKills = clanKills + clanMemberKills;
-                    clanDeaths = clanDeaths + clanMemberDeaths;
+                //get the money :)
+
+                File playerDataFile = new File("plugins/BetterEconomy/balances.yml");
+                YamlConfiguration playerData = YamlConfiguration.loadConfiguration(playerDataFile);
+                if (playerData.contains(clanMemberUUID)) {
+                    clanMoney = clanMoney + playerData.getDouble(clanMemberUUID);
                 }
+                else{
+                    System.out.println(clanMemberUUID + " Failed to get there p's");
+                }
+
+                clanKills = clanKills + clanMemberKills;
+                clanDeaths = clanDeaths + clanMemberDeaths;
             }
         }
 
         double clanPoints = (clanMoney / 100000) + (clanKills * 4) - clanDeaths; //The math to ger the points
-       return (double) Math.round(clanPoints);
+        return (double) Math.round(clanPoints);
     }
     public Map<String, Double> getClanTop(){
 
@@ -160,10 +175,10 @@ public class clanStats implements Listener {
         for (String fileName : clansList) {
             Double points = getPoints(fileName); // Implement the getPoints method.
             clansPointsMap.put(fileName, points);
+            System.out.println(fileName + " | " + points);
         }
 
-        clansPointsMap = bubbleSortClans(clansPointsMap);
-        clansPointsMap = chopHashMap(clansPointsMap, 10);
+        clansPointsMap = quickSortClans(clansPointsMap);
 
         return clansPointsMap;
     }
@@ -202,44 +217,47 @@ public class clanStats implements Listener {
         return yamlFileNames;
     }
 
-    public static Map<String, Double> bubbleSortClans(Map<String, Double> clansPointsMap) {
-        Map<String, Double> sortedMap = new HashMap<>(clansPointsMap);
+    public Map<String, Double> quickSortClans(Map<String, Double> clansPointsMap) {
+        List<Map.Entry<String, Double>> entryList = new ArrayList<>(clansPointsMap.entrySet());
+        quickSort(entryList, 0, entryList.size() - 1);
 
-        boolean swapped;
-        do {
-            swapped = false;
-            for (Entry<String, Double> entry : sortedMap.entrySet()) {
-                String currentClan = entry.getKey();
-                Double currentPoints = entry.getValue();
-                Entry<String, Double> nextEntry = getNextEntry(sortedMap, currentClan);
-
-                if (nextEntry != null) {
-                    String nextClan = nextEntry.getKey();
-                    Double nextPoints = nextEntry.getValue();
-                    if (currentPoints > nextPoints) {
-                        // Swap the positions of the clans in the sortedMap
-                        sortedMap.put(currentClan, nextPoints);
-                        sortedMap.put(nextClan, currentPoints);
-                        swapped = true;
-                    }
-                }
-            }
-        } while (swapped);
+        // Create a new map from the sorted entries
+        Map<String, Double> sortedMap = new LinkedHashMap<>();
+        for (Map.Entry<String, Double> entry : entryList) {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
 
         return sortedMap;
     }
 
-    public static Entry<String, Double> getNextEntry(Map<String, Double> map, String key) {
-        boolean found = false;
-        for (Entry<String, Double> entry : map.entrySet()) {
-            if (found) {
-                return entry;
-            }
-            if (entry.getKey().equals(key)) {
-                found = true;
+    private void quickSort(List<Map.Entry<String, Double>> entryList, int low, int high) {
+        if (low < high) {
+            int pivotIndex = partition(entryList, low, high);
+            quickSort(entryList, low, pivotIndex - 1);
+            quickSort(entryList, pivotIndex + 1, high);
+        }
+    }
+
+    private int partition(List<Map.Entry<String, Double>> entryList, int low, int high) {
+        double pivot = entryList.get(high).getValue();
+        int i = low - 1;
+
+        for (int j = low; j < high; j++) {
+            if (entryList.get(j).getValue() > pivot) {
+                i++;
+                swap(entryList, i, j);
             }
         }
-        return null;
+
+        swap(entryList, i + 1, high);
+        return i + 1;
     }
+
+    private void swap(List<Map.Entry<String, Double>> entryList, int i, int j) {
+        Map.Entry<String, Double> temp = entryList.get(i);
+        entryList.set(i, entryList.get(j));
+        entryList.set(j, temp);
+    }
+
 }
 

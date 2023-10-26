@@ -2,12 +2,14 @@ package org.matic.msclansaddons.events;
 
 import Clans.ClanConfiguration;
 import me.clip.placeholderapi.PlaceholderAPI;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.matic.msclansaddons.MsClansAddons;
 
 import static org.matic.msclansaddons.data.saveManger.getData;
 import static org.matic.msclansaddons.data.saveManger.saveData;
@@ -26,13 +28,13 @@ public class deathHandler implements Listener {
 
         //save there stats
 
-        playersKills = getData(killed,"deaths", "playerdata.yml") + 1;
-        saveData(killed, playersKills,"deaths", "playerdata.yml");
+        playersKills = getData(killed.getUniqueId().toString(),"deaths", "playerdata.yml") + 1;
+        saveData(killed.getUniqueId().toString(), playersKills,"deaths", "playerdata.yml");
 
         if(killer == null) return;
 
-        playersKills = getData(killer,"kills", "playerdata.yml") + 1;
-        saveData(killer, playersKills,"kills", "playerdata.yml");
+        playersKills = getData(killer.getUniqueId().toString(),"kills", "playerdata.yml") + 1;
+        saveData(killer.getUniqueId().toString(), playersKills,"kills", "playerdata.yml");
 
         //get there names
         String killedName = killed.getName();

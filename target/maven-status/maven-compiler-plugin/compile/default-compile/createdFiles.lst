@@ -1,5 +1,9 @@
+org\matic\msclansaddons\commands\tabber.class
 org\matic\msclansaddons\events\deathHandler.class
+org\matic\msclansaddons\events\joinEvent.class
 org\matic\msclansaddons\data\saveManger.class
 org\matic\msclansaddons\commands\clanStats.class
 org\matic\msclansaddons\MsClansAddons.class
+org\matic\msclansaddons\commands\spawn$1.class
+org\matic\msclansaddons\commands\spawn.class
 org\matic\msclansaddons\events\clanCreate.class

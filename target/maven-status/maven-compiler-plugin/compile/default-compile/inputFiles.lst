@@ -1,5 +1,7 @@
 J:\code\Intellj\MsClansAddons\src\main\java\org\matic\msclansaddons\events\clanCreate.java
 J:\code\Intellj\MsClansAddons\src\main\java\org\matic\msclansaddons\commands\clanStats.java
+J:\code\Intellj\MsClansAddons\src\main\java\org\matic\msclansaddons\commands\tabber.java
 J:\code\Intellj\MsClansAddons\src\main\java\org\matic\msclansaddons\events\deathHandler.java
+J:\code\Intellj\MsClansAddons\src\main\java\org\matic\msclansaddons\events\joinEvent.java
 J:\code\Intellj\MsClansAddons\src\main\java\org\matic\msclansaddons\data\saveManger.java
 J:\code\Intellj\MsClansAddons\src\main\java\org\matic\msclansaddons\MsClansAddons.java

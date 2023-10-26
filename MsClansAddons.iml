@@ -20,6 +20,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Clans-0.4.5" level="project" />
+    <orderEntry type="library" name="PlaceholderAPI-2.11.4" level="project" />
+    <orderEntry type="library" name="Vault" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: net.kyori:adventure-api:4.7.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: net.kyori:adventure-key:4.7.0" level="project" />
@@ -44,8 +47,25 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.ow2.asm:asm-commons:9.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.ow2.asm:asm-tree:9.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.ow2.asm:asm-analysis:9.0" level="project" />
-    <orderEntry type="library" name="Clans-0.4.5" level="project" />
-    <orderEntry type="library" name="PlaceholderAPI-2.11.4" level="project" />
-    <orderEntry type="library" name="Vault" level="project" />
+    <orderEntry type="module-library">
+      <library name="Maven: me.clip:placeholderapi:2.11.4">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/repo/PlaceholderAPI-2.11.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: net.server.clans:Clans:0.4.5">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/repo/Clans-0.4.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.github.MilkBowl:VaultAPI:1.7" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.bukkit:bukkit:1.13.1-R0.1-SNAPSHOT" level="project" />
   </component>
 </module>

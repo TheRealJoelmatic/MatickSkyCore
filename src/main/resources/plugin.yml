@@ -4,3 +4,10 @@ version: '${project.version}'
 main: org.matic.msclansaddons.MsClansAddons
 api-version: '1.16'
 depend: [Clans]
+commands:
+  spawn:
+    description: Teleport to spawn
+    usage: /spawn
+  wild:
+    description: Randomly Teleports You
+    usage: /wild
