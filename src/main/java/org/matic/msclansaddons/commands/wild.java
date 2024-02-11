@@ -11,7 +11,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.matic.msclansaddons.MsClansAddons;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 public class wild implements CommandExecutor {
+
+    private final Map<UUID, String> teleportingPlayers = new HashMap<>();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -19,24 +25,32 @@ public class wild implements CommandExecutor {
             sender.sendMessage("Only players can use this command.");
             return true;
         }
-
         Player player = (Player) sender;
+
+        // Check if the player is already in the process of teleportation
+        if (teleportingPlayers.containsKey(player.getUniqueId())) {
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou are already teleporting!"));
+            return true;
+        }
+
         World world = player.getWorld();
 
         // Calculate random coordinates within a 500x500 area
-        double minX = 70;
-        double maxX = 500;
+        double minX = -800;
+        double maxX = 800;
 
-        double minZ = 70;
-        double maxZ = 500;
+        double minZ = -800;
+        double maxZ = 800;
 
         double x = minX + Math.random() * (maxX - minX);
         double z = minZ + Math.random() * (maxZ - minZ);
 
-        double y = world.getHighestBlockYAt((int) x, (int) z);
+        double y = world.getHighestBlockYAt((int) x, (int) z) + 1;
 
         Location randomLocation = new Location(world, x, y, z);
         Location ogPlayerLocation = player.getLocation();
+
+        teleportingPlayers.put(player.getUniqueId(), player.getUniqueId().toString());
 
         // Make sure they don't move
         new BukkitRunnable() {
@@ -46,15 +60,27 @@ public class wild implements CommandExecutor {
             public void run() {
                 if (countdown == 0) {
                     player.teleport(new Location(Bukkit.getWorld("world"), randomLocation.getX(), randomLocation.getY(), randomLocation.getZ()));
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3MS &7| &aYou have been teleported to the wild."));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aYou have been teleported to the wild."));
+
+                    // Remove the player from the teleporting map
+                    teleportingPlayers.remove(player.getUniqueId());
+
                     cancel();
                 } else {
-                    if (!(ogPlayerLocation.getX() == player.getLocation().getX() && ogPlayerLocation.getZ() == player.getLocation().getZ())) {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3MS &7| &cTeleport Canceled"));
+
+                    boolean x0k = ogPlayerLocation.getX() < player.getLocation().getX() +  1 && ogPlayerLocation.getX() > player.getLocation().getX() +  - 1;
+                    boolean Z0k = ogPlayerLocation.getZ() < player.getLocation().getZ() +  1 && ogPlayerLocation.getZ() > player.getLocation().getZ() +  - 1;
+
+                    if (!(x0k && Z0k)) {
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cTeleport Canceled"));
+
+                        // Remove the player from the teleporting map
+                        teleportingPlayers.remove(player.getUniqueId());
+
                         cancel();
                     }
 
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3MS &7| &fTeleporting in &a" + countdown + " seconds... &c&lDon't Move!"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&fTeleporting in &a" + countdown + " seconds... &c&lDon't Move!"));
                     countdown--;
                 }
             }

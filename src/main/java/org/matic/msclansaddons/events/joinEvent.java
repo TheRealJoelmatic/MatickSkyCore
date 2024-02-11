@@ -14,15 +14,16 @@ public class joinEvent implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         event.setJoinMessage(null);
-        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&',"&7[&a+&7] " + event.getPlayer().getName()));
+        if (!event.getPlayer().hasPermission("core.mod")){
+            Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&',"&7[&a+&7] " + event.getPlayer().getName()));
+        }
+
 
         Player player = event.getPlayer();
 
-        saveData(player.getName(), player.getUniqueId().toString(),"uuid", "uuid.yml");
         try{
+            saveData(player.getName(), player.getUniqueId().toString(),"uuid", "uuid.yml");
             saveData(player.getName(), player.getAddress().getAddress().toString(),"ip", "uuid.yml");
-        }catch (Exception e){
-
-        }
+        }catch (Exception e){}
     }
 }

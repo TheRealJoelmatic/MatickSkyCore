@@ -14,7 +14,7 @@ public class betterSleep implements Listener{
 
         if (event.getBedEnterResult() == PlayerBedEnterEvent.BedEnterResult.OK) {
             // The player is successfully entering the bed to sleep
-            Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&3MS &7| &a" + player.getDisplayName() + " &fIs now sleeping. &7(Setting it to day)"));
+            Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&a" + player.getDisplayName() + " &fIs now sleeping. &7(Setting it to day)"));
             World world = player.getWorld();
             if (world != null) {
                 world.setTime(0);

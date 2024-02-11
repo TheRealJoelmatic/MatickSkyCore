@@ -68,10 +68,10 @@ public class saveManger {
         }
         else
         {
+            // Return null if player dont have anything
             System.out.println("FILE OR UUID NOT FOUND! : " + identifier + " dataName: " + dataName + " Filename: " + fileName);
+            return 0;
         }
-        // Return null if player dont have anything
-        return 0;
     }
 
     public static String getStringData(String identifier, String dataName, String fileName) {

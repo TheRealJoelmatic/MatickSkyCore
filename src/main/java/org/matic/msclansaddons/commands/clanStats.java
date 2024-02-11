@@ -29,6 +29,7 @@ public class clanStats implements Listener {
             event.setCancelled(true);
             return;
         }
+
         String command = event.getMessage().substring(1);
         String[] args = command.split(" ");
 
@@ -67,6 +68,7 @@ public class clanStats implements Listener {
 
 
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', " "));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Points are calculated via (clanMoney / 100000) + (clanKills * 4) - clanDeaths"));
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&m&m&3--------------------------------"));
 
         }
@@ -83,7 +85,7 @@ public class clanStats implements Listener {
         Economy economy = MsClansAddons.getEconomy();
 
         if(clanConfiguration.getClan(clan) == null){
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3Clans &7| &cThat clan does not exist!"));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cThat clan does not exist!"));
             return;
         }
 

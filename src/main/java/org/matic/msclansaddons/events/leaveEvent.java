@@ -14,6 +14,8 @@ public class leaveEvent  implements Listener {
         event.setQuitMessage(null);
 
         // Broadcast a custom leave message to all players
-        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&',"&7[&c-&7] " + event.getPlayer().getName()));
+        if (!event.getPlayer().hasPermission("core.mod")) {
+            Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&7[&c-&7] " + event.getPlayer().getName()));
+        }
     }
 }

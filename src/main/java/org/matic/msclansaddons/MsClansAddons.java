@@ -6,10 +6,7 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.matic.msclansaddons.commands.clanStats;
-import org.matic.msclansaddons.commands.spawn;
-import org.matic.msclansaddons.commands.tabber;
-import org.matic.msclansaddons.commands.wild;
+import org.matic.msclansaddons.commands.*;
 import org.matic.msclansaddons.events.*;
 
 import java.util.Objects;
@@ -77,6 +74,7 @@ public final class MsClansAddons extends JavaPlugin {
         //commands
         this.getCommand("spawn").setExecutor(new spawn());
         this.getCommand("wild").setExecutor(new wild());
+        this.getCommand("stats").setExecutor(new stats());
 
         System.out.println(ChatColor.translateAlternateColorCodes('&',"&7Loaded successfully"));
     }

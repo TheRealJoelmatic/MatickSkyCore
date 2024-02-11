@@ -11,3 +11,6 @@ commands:
   wild:
     description: Randomly Teleports You
     usage: /wild
+  stats:
+    description: Get the player's stats
+    usage: /stats <player>
