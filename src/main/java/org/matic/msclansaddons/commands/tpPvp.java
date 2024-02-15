@@ -1,5 +1,4 @@
 package org.matic.msclansaddons.commands;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -13,12 +12,11 @@ import org.matic.msclansaddons.MsClansAddons;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+public class tpPvp implements CommandExecutor{
 
-public class spawn implements CommandExecutor {
-
-    public static double spawnX = 0.5;
-    public static double spawnY = 190.2;
-    public static double spawnZ = 0.5;
+    public static double spawnX = 232;
+    public static double spawnY = 100;
+    public static double spawnZ = -215.5;
 
     private final Map<UUID, String> teleportingPlayers = new HashMap<>();
 
@@ -47,8 +45,8 @@ public class spawn implements CommandExecutor {
             @Override
             public void run() {
                 if (countdown == 0) {
-                    player.teleport(new Location(Bukkit.getWorld("world"), spawnX, spawnY, spawnZ));
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aYou have been teleported to the spawn point."));
+                    player.teleport(new Location(Bukkit.getWorld("pvp"), spawnX, spawnY, spawnZ));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aYou have been teleported to the pvp Zone."));
 
                     // Remove the player from the teleporting map
                     teleportingPlayers.remove(player.getUniqueId());

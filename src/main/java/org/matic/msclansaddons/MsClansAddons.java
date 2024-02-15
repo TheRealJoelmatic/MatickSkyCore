@@ -65,8 +65,14 @@ public final class MsClansAddons extends JavaPlugin {
         //events
         this.getServer().getPluginManager().registerEvents(new joinEvent(), this);
         this.getServer().getPluginManager().registerEvents(new leaveEvent(), this);
-
         this.getServer().getPluginManager().registerEvents(new deathHandler(), this);
+
+        this.getServer().getPluginManager().registerEvents(new move(), this);
+        this.getServer().getPluginManager().registerEvents(new interact(), this);
+
+        this.getServer().getPluginManager().registerEvents(new respawn(), this);
+        this.getServer().getPluginManager().registerEvents(new damage(), this);
+
         this.getServer().getPluginManager().registerEvents(new phatomRemover(), this);
 
         this.getServer().getPluginManager().registerEvents(new betterSleep(), this);
@@ -75,6 +81,8 @@ public final class MsClansAddons extends JavaPlugin {
         this.getCommand("spawn").setExecutor(new spawn());
         this.getCommand("wild").setExecutor(new wild());
         this.getCommand("stats").setExecutor(new stats());
+        this.getCommand("ls").setExecutor(new lifesteal());
+        this.getCommand("pvp").setExecutor(new tpPvp());
 
         System.out.println(ChatColor.translateAlternateColorCodes('&',"&7Loaded successfully"));
     }

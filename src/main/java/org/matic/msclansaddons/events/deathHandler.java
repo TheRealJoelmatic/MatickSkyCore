@@ -9,10 +9,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.matic.msclansaddons.MsClansAddons;
 
 import static org.matic.msclansaddons.data.saveManger.getData;
 import static org.matic.msclansaddons.data.saveManger.saveData;
+import static org.matic.msclansaddons.functions.heartManger.killHandler;
+import static org.matic.msclansaddons.functions.heartManger.setMaxHearts;
 
 
 public class deathHandler implements Listener {
@@ -27,11 +28,15 @@ public class deathHandler implements Listener {
         Double playersKills = (double) 0;
 
         //save there stats
-
         playersKills = getData(killed.getUniqueId().toString(),"deaths", "playerdata.yml") + 1;
         saveData(killed.getUniqueId().toString(), playersKills,"deaths", "playerdata.yml");
 
-        if(killer == null) return;
+        if(killer == null) {
+            double newHealth = killed.getHealthScale() - 2;
+            setMaxHearts(killed, newHealth);
+            return;
+        }
+        killHandler(killed, killer);
 
         playersKills = getData(killer.getUniqueId().toString(),"kills", "playerdata.yml") + 1;
         saveData(killer.getUniqueId().toString(), playersKills,"kills", "playerdata.yml");
@@ -59,7 +64,6 @@ public class deathHandler implements Listener {
         deathMessageP2 = PlaceholderAPI.setPlaceholders(killed, deathMessageP2);
         String broadcastMessage = ChatColor.translateAlternateColorCodes('&', deathMessageP1 + deathMessageP2);
         Bukkit.broadcastMessage(broadcastMessage);
-
 
         // Do something with the player names
         System.out.println(killedName + " was killed by " + killerName);

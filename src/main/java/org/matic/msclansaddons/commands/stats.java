@@ -9,8 +9,7 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 
-import static org.matic.msclansaddons.data.saveManger.getData;
-import static org.matic.msclansaddons.data.saveManger.saveData;
+import static org.matic.msclansaddons.data.saveManger.*;
 
 public class stats implements CommandExecutor {
     @Override
@@ -33,7 +32,7 @@ public class stats implements CommandExecutor {
 
         if (args.length == 1) {
             playerName = args[0];
-            playerUUID = String.valueOf(getData(playerName, "uuid", "uuid.yml"));
+            playerUUID = getStringData(playerName, "uuid", "uuid.yml");
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l " + playerUUID));
             if (playerUUID == null || playerUUID.equals("0") || playerUUID.equals("0.0")){
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l" + playerName + "&r&c not found!"));

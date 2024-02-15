@@ -12,15 +12,8 @@ public class betterSleep implements Listener{
     public void onPlayerBedEnter(PlayerBedEnterEvent event) {
         Player player = event.getPlayer();
 
-        if (event.getBedEnterResult() == PlayerBedEnterEvent.BedEnterResult.OK) {
-            // The player is successfully entering the bed to sleep
-            Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&a" + player.getDisplayName() + " &fIs now sleeping. &7(Setting it to day)"));
-            World world = player.getWorld();
-            if (world != null) {
-                world.setTime(0);
-                world.setThundering(false);
-                world.setStorm(false);
-            }
-        }
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&lSleeping is disabled"));
+
+        event.setCancelled(true);
     }
 }

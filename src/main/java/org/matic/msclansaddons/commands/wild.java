@@ -35,12 +35,11 @@ public class wild implements CommandExecutor {
 
         World world = player.getWorld();
 
-        // Calculate random coordinates within a 500x500 area
-        double minX = -800;
-        double maxX = 800;
+        double minX = -300;
+        double maxX = 300;
 
-        double minZ = -800;
-        double maxZ = 800;
+        double minZ = -300;
+        double maxZ = 300;
 
         double x = minX + Math.random() * (maxX - minX);
         double z = minZ + Math.random() * (maxZ - minZ);
