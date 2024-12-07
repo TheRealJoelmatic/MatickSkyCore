@@ -12,8 +12,8 @@ MsClansAddons introduces a variety of enhancements to Minecraft servers, includi
 - **Lifesteal**: Adds a lifesteal mechanic to spice up gameplay.
 - **Wild Teleport**: Allows players to teleport to a random location in the wild.
 - **Spawn Management**: Set and manage spawn points with ease.
-- **PvP Zone**: Create dedicated areas for player-versus-player combat.
-- **Tabber**: Customize the player tab list for improved aesthetics and functionality.
+- **PvP Zone**: TP to the pvp zone.
+- **Tabber**: Allows u to tab clans commands.
 - **Better Sleep**: Enhances the sleeping mechanics for better server management.
 - **Phantom Remover**: Removes phantoms to improve the player experience.
 
