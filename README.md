@@ -21,7 +21,7 @@ MsClansAddons introduces a variety of enhancements to Minecraft servers, includi
 
 The plugin is organized into the following components:
 
-- **Commands**: Core commands like `spawn`, `wild`, `spawn`, `stats`, `tpPvp`, and more.
+- **Commands**: Core commands like `clanStats`, `lifesteal`, `spawn`, `stats`, `tpPvp`, and more.
 - **Data**: Data handling classes like `UUIDFetcher` and `saveManager`.
 - **Events**: Custom event handling, including `betterSleep`, `clanCreate`, `damage`, `interact`, `joinEvent`, and more.
 - **Functions**: Utility functions, such as `heartManager`, that enhance the plugin's capabilities.
