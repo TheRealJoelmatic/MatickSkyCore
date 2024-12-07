@@ -54,5 +54,3 @@ This project is shared as-is under an open license for educational and personal 
 
 ---
 
-Whether you're looking to relive some nostalgia or build the next big Minecraft server, MsClansAddons is a great tool to get started. Happy crafting!
-
